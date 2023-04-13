@@ -13,18 +13,18 @@ app.version = "0.0.1"
 movies = [
     {
         "id": 1,
-        "title": "Avatar",
-        "overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
+        "title": "Titanic",
+        "overview": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         "year": "2009",
         "rating": 7.8,
-        "category": "Acción",
+        "category": "Action",
     },
     {
         "id": 2,
         "title": "Avatar",
-        "overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
+        "overview": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         "year": "2009",
-        "rating": 7.8,
+        "rating": 8.0,
         "category": "Terror",
     },
 ]
@@ -61,7 +61,12 @@ def get_movies() -> List[Movie]:
     return JSONResponse(content=movies)
 
 
-@app.get("/movies/{id}", tags=["movies"], response_model=Movie)
+@app.get(
+    "/movies/{id}",
+    tags=["movies"],
+    response_model=Movie,
+    dependencies=[Depends(JWTBearer())],
+)
 def get_movie(id: int = Path(ge=1, le=200)) -> Movie:
     for movie in movies:
         if movie["id"] == id:
@@ -69,7 +74,12 @@ def get_movie(id: int = Path(ge=1, le=200)) -> Movie:
     return JSONResponse(status_code=404, content=[])
 
 
-@app.get("/movies/", tags=["movies"], response_model=List[Movie])
+@app.get(
+    "/movies/",
+    tags=["movies"],
+    response_model=List[Movie],
+    dependencies=[Depends(JWTBearer())],
+)
 def get_movies_by_category(
     category: str = Query(min_length=5, max_length=15)
 ) -> List[Movie]:
@@ -80,13 +90,25 @@ def get_movies_by_category(
     return JSONResponse(content=filtered_movies)
 
 
-@app.post("/movies", tags=["movies"], response_model=dict, status_code=201)
+@app.post(
+    "/movies",
+    tags=["movies"],
+    response_model=dict,
+    status_code=201,
+    dependencies=[Depends(JWTBearer())],
+)
 def create_movie(movie: Movie) -> dict:
     movies.append(movie.dict())
     return JSONResponse(status_code=201, content={"message": "Created Satisfactory"})
 
 
-@app.put("/movies/{id}", tags=["movies"], response_model=dict, status_code=200)
+@app.put(
+    "/movies/{id}",
+    tags=["movies"],
+    response_model=dict,
+    status_code=200,
+    dependencies=[Depends(JWTBearer())],
+)
 def update_movie(id: int, movie: Movie) -> dict:
     for mov in movies:
         if mov["id"] == id:
@@ -96,7 +118,13 @@ def update_movie(id: int, movie: Movie) -> dict:
     return JSONResponse(status_code=200, content={"message": "Updated Satisfactory"})
 
 
-@app.delete("/movies/{id}", tags=["movies"], response_model=dict, status_code=200)
+@app.delete(
+    "/movies/{id}",
+    tags=["movies"],
+    response_model=dict,
+    status_code=200,
+    dependencies=[Depends(JWTBearer())],
+)
 def delete_movie(id: int) -> dict:
     for movie in movies:
         if movie["id"] == id:
