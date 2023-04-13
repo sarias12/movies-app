@@ -20,3 +20,7 @@ class Movie(BaseModel):
                 "category":"Without category",
             }
         }
+
+class User(BaseModel):
+    user: str
+    password: str
