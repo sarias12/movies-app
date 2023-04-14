@@ -67,7 +67,10 @@ INFO:     Application startup complete.
 INFO:     127.0.0.1:42202 - "GET /docs HTTP/1.1" 200 OK
 INFO:     127.0.0.1:42202 - "GET /openapi.json HTTP/1.1" 200 OK
 ```
-You can go to the following url [http//localhost:8080/](http//localhost:8080/) in your browser, there you will see all the documentation and information about the use of the API
+You can go to the following url [http//localhost:8080/docs](http//localhost:8080/docs) in your browser, there you will see all the documentation and information about the use of the API
+
+the default login credentials are user: test password: password, from the generated token you can make use of the endpoints.
+
 ## Authors
 
 Sergio Steben Arias Quintero  
@@ -79,6 +82,7 @@ Email - steben.12q@gmail.com
 * [Pydantic](https://docs.pydantic.dev/)
 * [Python](https://www.python.org/)
 * [Uvicorn](https://www.uvicorn.org/)
+* [SQLAlchemy ](https://www.sqlalchemy.org/)
 
 ## Acknowledgments
 * [Platzi](https://platzi.com/cursos/fastapi/)
